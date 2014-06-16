@@ -1,0 +1,29 @@
+.item {
+    display:inline-block;
+}
+#house {
+    width: 40%;
+    float:left;
+    margin-top:100px;
+}
+#bouglar {
+    width: 40%;
+    float:right;
+    margin-top:100px;
+}
+#house_h{
+
+    margin-left: 100px;
+}
+#sack_h{
+
+    margin-left: 60%;
+}
+.header{
+    position:absolute;
+    font-size: 3em;
+}
+#sack_data_h{
+    margin-top:50px;
+    margin-left: 60%
+}
