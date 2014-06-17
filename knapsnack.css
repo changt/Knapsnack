@@ -27,3 +27,17 @@
     margin-top:50px;
     margin-left: 60%
 }
+.message{
+    position:absolute;
+    margin-left: 33%;
+    color:#2366f7;
+    font-size:4em;
+    margin-top: 330px;
+    display:none;
+
+}
+.item_txt{
+    text-align:center;
+    font-size:2em;
+    font-weight:bold;
+}
