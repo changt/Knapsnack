@@ -1,29 +1,32 @@
 //sound sources.
     var failsnd = new Audio("fail.wav")
     var getsnd = new Audio("get.wav")
-//global parameters to be set by user
-
+    var maxweight = 20  //default value. updated later if we use remote data.
 
 
 //item 'class', but is actrually a function
 //reference: http://www.phpied.com/3-ways-to-define-a-javascript-class/
 function item (img, value, weight, name){
+    //basic data. these are external.
     this.value = value;
     this.weight = weight;
     this.name = name;
     this.stolen = false;
+    
+    
+    var self = this ;           //so that js knows we're talking about the item, instead of whateverelse is passed in.
     var $sackdata = $('#sack_data_h');
-    //makes some containers and txt for the item
+    //makes some containers and txt for the item. These are internal.
     var $container = $('<div class = "item"/div>')
     var $img = $('<img class = "item_img"  src="' + img + '" />');   //use item class to modify css
     var $txt_v = $('<div class = "item_txt_v">');
-    var $txt_n = $('<div class = "item_txt_n">');
+    var $txt_n = $('<div class = "item_txt_n">')
+
     $txt_n.text(name)
     $txt_v.text('$' + value + ' ,' + weight + ' kg')
     $container.append($img);
     $container.append($txt_n);
     $container.append($txt_v);
-    var maxweight = $sackdata.data('maxweight')
     //draws the item or removes it
     this.draw = function($div){
         $div.append($container);
@@ -32,26 +35,23 @@ function item (img, value, weight, name){
     this.remove = function(){
         $container.remove()
     }
-    this.animate_horizontal = function(len){            //calls an animation that moves to the right by len px. Doesn't work yet.
-        console.log($container)
-        $($container).css("position", "fixed")
-        $($img).animate({marginLeft: len});
+    this.animate = function(){            //a small animation that controls fading
+        $container.hide()
+        $container.fadeIn()
     }
     this.updatesack = function(value, weight){  //updates data function. INCREMENTS by value and weight.
         var val = $sackdata.data('value') + value;
         var weight = $sackdata.data('weight') + weight;
         $sackdata.data('value',val);
         $sackdata.data('weight', weight);
-        $sackdata.text('$'+ val + ' ,' + weight + 'kg');
+        $sackdata.text('$'+ val + ', Carry Weight: ' + weight + '/' + maxweight);
     }
-    var self = this ;            //so that js knows we're talking about the item, instead of whateverelse is passed in.
     this.move = function(){     //move the item, as well as updates data. also checks for overweight
-
         if (!self.stolen){
             if(($sackdata.data('weight')+self.weight)<=maxweight){
                 getsnd.play();
- //             self.animate_horizontal(600);
-                self.remove();
+                self.remove()
+                self.animate();
                 self.stolen = true;
                 self.draw($('#bouglar'));
                 self.updatesack(self.value, self.weight);
@@ -59,15 +59,15 @@ function item (img, value, weight, name){
             else
             {
                 failsnd.play();
-                $('.message').slideDown(400, function(){
-                    setTimeout(function(){$('.message').slideUp(500)}, 1000)}); //300ms: appearing animation; 500ms: hiding animation; 1000ms: time displayed.
+                $('.message').fadeIn(400, function(){
+                    setTimeout(function(){$('.message').fadeOut(500)}, 1000)}); //300ms: appearing animation; 500ms: hiding animation; 1000ms: time displayed.
             }
         }
         else
         {
-//          self.animate_horizontal(-600);
             getsnd.play();
-            self.remove()
+            self.remove();
+            self.animate();
             self.updatesack(self.value*-1, self.weight*-1);
             self.stolen = false;
             self.draw($('#house'));
@@ -80,47 +80,63 @@ $(function() {
     var numitems = $('.knapsack').data('numitems')  //user specified number of items to show.
     console.log(numitems)
     //makes a list of items
-    var $items  = [];   //jquery selection of items
-    var items = [];     //all availble actrual item objects
-    var selected_items = [];    //items to be presented on screen
-    
-    //Ajax code. Currently loads a local static page. In the future, hopefully use a server to load data from the interweb. 
+    var $items  = [];           //jquery selection of items
+    var items = [];             //all availble actrual item objects, as defined by constructor above.
+    var selected_items = [];    //items to be presented on 
+    var uselocal                //whether we end up using local data or not.
+    //yahoo yql service. Allows for AJAX cross-domain xml reference.
+    site = 'uesp.net/wiki/Skyrim:Leveled_Items'
+    var yql = "https://query.yahooapis.com/v1/public/yql?q=" + encodeURIComponent("select * from html where url='" + site+ "'");
     $.ajax({
-        url: 'items.html',
+        url: yql,
         success: update_s,
         error:update_f
-        //dataType: dataType
     });
     function update_s(data){
         //parse the html page for pictures, weights, names and value.
         var $data = $(data)
         var $items_data = $data.find('#mw-content-text .wikitable')    //the items' data are in the wikitable under the #mw-content-text div.
-        $items = $items_data.next().find(".thumbimage")  //  the item pics are stored inside the div immediately following the table.
+        $items = $items_data.next().find(".thumbimage")  // the item pics are stored inside the div immediately following the table.
         $items.each(function(index,element){
             //set weight, value and name onto the html.
-            $(element).data('value',$($items_data[index]).find("td:contains('Value')").next().text()) //the actrual value is contained in the td immedeately following the one that contains the text "value". same goes for weight.
-            $(element).data('weight', $($items_data[index]).find("td:contains('Weight')").next().text())   
-            $(element).data('name',$(element).parent().parent().find(".thumbcaption").text().split("\n")[2])    //the name comes with two "newlines"
+            var value = $items_data.eq(index).find("td:contains('Value')").next().text()
+            var weight = $items_data.eq(index).find("td:contains('Weight')").next().text()
+            var name = $(element).parent().parent().find(".thumbcaption").text() //the name comes with two "newline" characters
+            var img_src = $(element).attr('src')
+            items[index] = new item(img_src,parseInt(value),parseInt(weight),name)
         });
-        draw_items()       //need to be called after external page loads.
-
+        uselocal = false;
+        maxweight = 0;       //set our own maxweight if load is successful.
+        draw_items();       //need to be called after external page loads.
     }
-    function update_f(jqXHR,textStatus,errorThrown){
-        $items  = $('.knapsack *'); //use local data if load fails. 
-        draw_items()
-    }
-    function draw_items(){
+    function update_f(jqXHR,textStatus,errorThrown){   //use local data if load fails. Three paramenters are required by ajax and are not used.
+        uselocal = true;
+        $items  = $('.knapsack *'); 
         for (i=0; i<$items.length; i++){
-            items[i] = new item ($($items[i]).attr('src'), parseInt($($items[i]).data('value')), parseInt($($items[i]).data('weight')), $($items[i]).data('name'));
-        }
+            items[i] = new item ($items.eq(i).attr('src'), parseInt(items.eq(i).data('value')), parseInt($items.eq(i).data('weight')), $items.eq(i).data('name'));
+        draw_items();
+    }
+    }
+    
+    function draw_items(){
         if (numitems > $items.length){
             numitems = $items.length        //when we don't have that many items, we show all we have
         }
         items.sort(function() {return (Math.round(Math.random())-0.5)})    //randomly sort the array. imperfect, but works.
         for (i=0; i<numitems; i++){
+            selected_items[i] = items[i]
             items[i].draw($('#house'));
+            if(!uselocal){
+            maxweight += Math.floor(items[i].weight/2)         //keep carry weight an integer.
+            }
         }
-        
+        items[i].updatesack(0,0)                               //initializes sack display.
     }
     $('.knapsack').remove();//removes the initial div
+    adjust_size()
 });
+function adjust_size(){     //adjusts some css dynamically
+    height = $('html').css('height');
+    $('#main').css('height', height);
+         }
+$(window).resize(adjust_size);

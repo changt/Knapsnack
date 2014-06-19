@@ -1,3 +1,25 @@
+html{
+}
+header, footer{ position:fixed; left:0; right:0; z-index:1; }
+header{ top:0; }
+footer{ bottom:0; }
+body{
+    background-image:url('background.jpg');
+    font-family: 'Futura ND';
+    font-weight: lighter;
+    color:white;
+    margin:0px;
+}
+#main{
+    width: 100%;
+    background: -moz-radial-gradient(center, ellipse cover, rgba(48,48,48,0.66) 0%, rgba(16,16,16,0.87) 50%, rgba(0,0,0,0.95) 100%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(48,48,48,0.66)), color-stop(50%,rgba(16,16,16,0.87)), color-stop(100%,rgba(0,0,0,0.95))); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(48,48,48,0.66) 0%,rgba(16,16,16,0.87) 50%,rgba(0,0,0,0.95) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover, rgba(48,48,48,0.66) 0%,rgba(16,16,16,0.87) 50%,rgba(0,0,0,0.95) 100%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover, rgba(48,48,48,0.66) 0%,rgba(16,16,16,0.87) 50%,rgba(0,0,0,0.95) 100%); /* IE10+ */
+    background: radial-gradient(ellipse at center, rgba(48,48,48,0.66) 0%,rgba(16,16,16,0.87) 50%,rgba(0,0,0,0.95) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ba303030', endColorstr='#000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
 .item {
     display:inline-block;
     margin:25px;
@@ -15,16 +37,26 @@
     
 }
 .item_img{
+    display:block;
     margin-left:auto;
     margin-right:auto;
 }
-#house {
-    width: 40%;
-    float:left;
+
+#house, #bouglar{
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 25px;
     margin-top:100px;
+    width: 45%;
+    min-height: 850px;
+}
+#house {
+    float:left;
+    margin-left: 3%;
+
 }
 #bouglar {
-    width: 40%;
+    margin-right: 3%;
     float:right;
     margin-top:100px;
 }
@@ -45,12 +77,18 @@
     margin-left: 60%
 }
 .message{
+    padding: 50px;
+    vertical-align:center;
     position:absolute;
-    margin-left: 33%;
-    color:#2366f7;
+    border-style: solid;
+    margin-left: 25%;
+    color:#fff;
     font-size:4em;
     margin-top: 330px;
     display:none;
+    border-radius: 25px;
+    background: radial-gradient(ellipse at center, rgba(48,48,48,0.66) 0%,rgba(16,16,16,0.87) 50%,rgba(0,0,0,0.95) 100%);
+
 
 }
 
