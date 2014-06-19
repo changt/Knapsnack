@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id = 'main'>
-        <div class="knapsack" data-maxweight="20">
+        <div class="knapsack" data-maxweight="20" data-numitems ='8'>
             <img src="clock.png" data-value="175" data-weight="10" data-name="clock">
             <img src="painting.png" data-value="90" data-weight="9" data-name="painting">
             <img src="radio.png" data-value="20" data-weight="4" data-name="radio">
@@ -17,17 +17,18 @@
             <img src="computer.png" data-value="200" data-weight="20" data-name="computer">
         </div>
         <div class = "header" id = "house_h">
-        House
+        Chest
         </div>
         <div class = "header" id = "sack_h">
-        Burglar's sack
+        Your items
         </div><br><br>
-        <div class = "header" id = "sack_data_h" data-weight = '0' data-value = '0' data-maxweight = "20">
+        <div class = "header" id = "sack_data_h" data-weight = '0' data-value = '0' data-maxweight = "20" data-numitems = '8'>
         $0, 0kg
         </div><br><br>
         <span id = 'house'></span>
         <span id = 'bouglar'></span>
         <div class = 'message'>Sack Already Full</div>
+        <div id = 'invis'></div>
     </div>
 </body>
 </html>

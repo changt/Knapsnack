@@ -1,5 +1,22 @@
 .item {
     display:inline-block;
+    margin:25px;
+    width:180px;
+}
+.item_txt_v{
+    text-align:center;
+    font-size:1.5em;
+    font-weight:bold;
+}
+
+.item_txt_n{
+    text-align:center;
+    font-size: 1em;
+    
+}
+.item_img{
+    margin-left:auto;
+    margin-right:auto;
 }
 #house {
     width: 40%;
@@ -36,8 +53,9 @@
     display:none;
 
 }
-.item_txt{
-    text-align:center;
-    font-size:2em;
-    font-weight:bold;
+
+#invis{
+    background-color:white;
+    background-image:none;
+    display:none;
 }
