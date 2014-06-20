@@ -1,5 +1,5 @@
 html{
-    height:800px;
+    height:700px;
     width:800px;
 }
 header, footer{
@@ -62,7 +62,7 @@ body{
     border-radius: 25px;
     margin-top:100px;
     width: 45%;
-    min-height: 500px;
+    min-height: 450px;
 }
 #house {
     float:left;
@@ -80,7 +80,7 @@ body{
 }
 #sack_h{
 
-    margin-left: 60%;
+    margin-left: 65%;
 }
 .header{
     padding-top: 3%;
@@ -89,7 +89,7 @@ body{
 }
 #sack_data_h{
     margin-top:50px;
-    margin-left: 60%
+    margin-left: 55%;
 }
 .message{
     padding: 50px;
