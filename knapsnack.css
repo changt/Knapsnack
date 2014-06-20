@@ -34,10 +34,10 @@ body{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ba303030', endColorstr='#000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 .item {
-    color: #858786;
+    color: #999999;
     display:inline-block;
-    margin:10px;
-    width:25%;
+    margin:5px;
+    width:30%;
     font-weight:lighter;
     cursor: pointer;
 }
@@ -46,13 +46,13 @@ body{
 }
 .item_txt_v{
     text-align:center;
-    font-size: 6pt;
+    font-size: 8pt;
     font-weight:lighter;
 }
 
 .item_txt_n{
     text-align:center;
-    font-size: 6pt;
+    font-size: 8pt;
     
 }
 .item_img{
@@ -106,7 +106,7 @@ body{
     border-width: 3px;
     border-style: solid;
     border-radius: 10px;
-    color:#888888;
+    color:#999999;
     background: radial-gradient(ellipse at center, rgba(48,48,48,0.66) 0%,rgba(16,16,16,0.87) 50%,rgba(0,0,0,0.95) 100%);
 }
 .auto:hover{
