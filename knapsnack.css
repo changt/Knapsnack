@@ -16,6 +16,7 @@ footer{
 }
 
 body{
+    background-size:1500px;
     background-image:url('background.jpg');
     font-family: 'Futura ND';
     font-weight: lighter;
@@ -33,10 +34,15 @@ body{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ba303030', endColorstr='#000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 .item {
+    color: #858786;
     display:inline-block;
     margin:10px;
     width:25%;
     font-weight:lighter;
+    cursor: pointer;
+}
+.item:hover{
+    color: white;
 }
 .item_txt_v{
     text-align:center;
@@ -91,6 +97,22 @@ body{
     margin-top:50px;
     margin-left: 55%;
 }
+.buttons{
+    margin : 4%;
+}
+.auto{
+    margin-top: 10px;
+    padding: 5px;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 10px;
+    color:#888888;
+    background: radial-gradient(ellipse at center, rgba(48,48,48,0.66) 0%,rgba(16,16,16,0.87) 50%,rgba(0,0,0,0.95) 100%);
+}
+.auto:hover{
+    color:white;
+    cursor:pointer;
+}
 .message{
     padding: 50px;
     vertical-align:center;
@@ -103,12 +125,4 @@ body{
     display:none;
     border-radius: 25px;
     background: radial-gradient(ellipse at center, rgba(48,48,48,0.66) 0%,rgba(16,16,16,0.87) 50%,rgba(0,0,0,0.95) 100%);
-
-
-}
-
-#invis{
-    background-color:white;
-    background-image:none;
-    display:none;
 }

@@ -79,7 +79,6 @@ function item (img, value, weight, name){
 //executes after browser loads
 $(function() {
     var numitems = $('.knapsack').data('numitems')  //user specified number of items to show.
-    console.log(numitems)
     //makes a list of items
     var $items  = [];           //jquery selection of items
     var items = [];             //all availble actrual item objects, as defined by constructor above.
@@ -135,6 +134,44 @@ $(function() {
     }
     $('.knapsack').remove();//removes the initial div
     adjust_size()
+    
+    $('.auto').click(Auto_Steal)
+    
+    function Auto_Steal(event){
+        var sort_type = $(event.currentTarget).attr('id')
+        selected_items.sort(function(a,b){
+            if (sort_type == 'ratio'){
+                return (b.value/b.weight - a.value/a.weight)
+            }
+            else if (sort_type == 'value'){
+                return (b.value - a.value)
+            }
+            else{
+                return (a.weight - b.weight)
+            }
+        })
+        var counter = 0;
+        //move everything to house first
+        selected_items.forEach(function(item){
+            if (item.stolen == true){
+                item.move();
+            }
+        });
+        //then move the first few items to the right.
+        Place_interval = setInterval(Auto_Place, 300);
+        function Auto_Place(){
+            if (counter<numitems && $('#sack_data_h').data('weight')+selected_items[counter].weight<=maxweight){
+                selected_items[counter].move();
+                counter+= 1;
+            }
+            else
+            {
+                clearInterval(Place_interval);
+            }
+    }
+    }
+
+    
 });
 function adjust_size(){     //adjusts some css dynamically to counter browser window changes
     height = $('html').css('height');
