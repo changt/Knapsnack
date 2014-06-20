@@ -135,7 +135,7 @@ $(function() {
     $('.knapsack').remove();//removes the initial div
     adjust_size()
 });
-function adjust_size(){     //adjusts some css dynamically
+function adjust_size(){     //adjusts some css dynamically to counter browser window changes
     height = $('html').css('height');
     $('#main').css('height', height);
          }
