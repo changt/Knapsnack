@@ -30,6 +30,7 @@ function item (img, value, weight, name){
     //draws the item or removes it
     this.draw = function($div){
         $div.append($container);
+        $container.css('display', 'inline-block');
         $($img).click(this.move)           
     }
     this.remove = function(){
