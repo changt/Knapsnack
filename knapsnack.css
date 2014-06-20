@@ -34,8 +34,8 @@ body{
 }
 .item {
     display:inline-block;
-    margin:25px;
-    width:15%;
+    margin:10px;
+    width:25%;
     font-weight:lighter;
 }
 .item_txt_v{
@@ -62,7 +62,7 @@ body{
     border-radius: 25px;
     margin-top:100px;
     width: 45%;
-    min-height: 600px;
+    min-height: 500px;
 }
 #house {
     float:left;
@@ -83,8 +83,9 @@ body{
     margin-left: 60%;
 }
 .header{
+    padding-top: 3%;
     position:absolute;
-    font-size: 2vw;
+    font-size: 3vw;
 }
 #sack_data_h{
     margin-top:50px;
